@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>牡羊座10月感情運勢</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+
+  :root {
+    --bg1:        #0a0e2a;
+    --bg2:        #131a3d;
+    --bg3:        #1d1147;
+    --ink:        #e6e8ff;
+    --ink-soft:   #9aa0d6;
+    --amber:      #8f7ff0;
+    --amber-l:    #b39bff;
+    --gold:       #d4a843;
+    --gold-l:     #f0cc7a;
+    --lilac:      #6f6ac9;
+    --white:      #ffffff;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: linear-gradient(180deg, var(--bg1), var(--bg2) 55%, var(--bg3));
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  #stars-canvas {
+    position: fixed; top:0; left:0;
+    width:100%; height:100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  section { position: relative; z-index: 1; }
+
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 60px 24px 40px;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(32px, 8vw, 64px);
+    font-weight: 900;
+    line-height: 1.3;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #b39bff, #f0cc7a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeDown 0.9s ease 0.1s both;
+  }
+  .hero-title .line2 {
+    display: block;
+    background: linear-gradient(135deg, #6f6ac9, #b39bff, var(--gold-l));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 16px; color: var(--ink-soft);
+    line-height: 1.8; max-width: 480px;
+    margin-bottom: 48px;
+    animation: fadeDown 1s ease 0.2s both;
+  }
+
+  .scroll-hint {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--ink-soft); font-size: 13px; letter-spacing: 2px;
+    animation: fadeDown 1s ease 0.4s both;
+  }
+  .scroll-hint .arrow {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--ink-soft), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  .pick-section {
+    padding: 80px 24px;
+    display: flex; flex-direction: column;
+    align-items: center;
+  }
+
+  .section-label {
+    font-size: 11px; letter-spacing: 5px;
+    color: var(--amber); text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+    color: var(--lilac);
+  }
+
+  .section-desc {
+    color: var(--ink-soft); font-size: 15px;
+    text-align: center; max-width: 480px;
+    line-height: 1.8; margin-bottom: 56px;
+  }
+
+  .cards-row {
+    display: flex; gap: 16px; justify-content: center;
+    flex-wrap: nowrap; width: 100%;
+    max-width: 500px;
+    padding: 0 8px;
+  }
+
+  .tarot-card {
+    width: clamp(120px, 35vw, 180px);
+    cursor: pointer;
+    perspective: 1000px;
+    flex-shrink: 0;
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%; padding-bottom: 160%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+    border-radius: 16px;
+  }
+
+  .tarot-card:hover:not(.flipped) .card-inner {
+    transform: translateY(-12px) rotateY(15deg);
+  }
+  .tarot-card.flipped .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-face, .card-back {
+    position: absolute; inset: 0;
+    border-radius: 16px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+  }
+
+  .card-back {
+    background: linear-gradient(145deg, #1a0e3a, #0d1a4a);
+    border: 1.5px solid rgba(180,140,255,0.4);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 10px;
+    box-shadow: 0 0 30px rgba(100,60,200,0.3), inset 0 0 40px rgba(0,0,0,0.3);
+  }
+
+  .card-back::before {
+    content: '';
+    position: absolute; inset: 8px;
+    border: 1px solid rgba(180,140,255,0.2);
+    border-radius: 10px;
+  }
+
+  .card-glyph {
+    font-size: 42px;
+    filter: drop-shadow(0 0 12px rgba(160,120,255,0.8));
+    animation: glyphFloat 3s ease-in-out infinite;
+  }
+  .tarot-card:nth-child(2) .card-glyph { animation-delay: 0.5s; }
+
+  .card-label {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px; font-weight: 900;
+    color: var(--gold-l);
+    text-shadow: 0 0 20px rgba(212,168,67,0.8);
+    letter-spacing: 4px;
+  }
+
+  .card-hint {
+    font-size: 11px; color: var(--lilac);
+    letter-spacing: 2px;
+  }
+
+  .card-face {
+    transform: rotateY(180deg);
+    background: linear-gradient(155deg, #1e0a40, #0a1535, #1a0830);
+    border: 1.5px solid rgba(212,168,67,0.5);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 40px rgba(212,168,67,0.3);
+  }
+  .card-face-content {
+    text-align: center; padding: 20px 12px;
+  }
+  .card-face-letter {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 28px; font-weight: 900;
+    background: linear-gradient(135deg, var(--gold), var(--gold-l));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .card-face-sub { font-size: 12px; color: var(--lilac); margin-top: 6px; letter-spacing: 2px; }
+
+  .card-back::after {
+    content: '';
+    position: absolute; top: -50%; left: -50%;
+    width: 30%; height: 200%;
+    background: linear-gradient(105deg, transparent, rgba(255,255,255,0.06), transparent);
+    transform: rotate(25deg);
+    animation: shimmer 4s ease-in-out infinite;
+  }
+  .tarot-card:nth-child(2) .card-back::after { animation-delay: 1.3s; }
+
+  .answer-section {
+    padding: 0 24px 80px;
+    max-width: 720px; margin: 0 auto;
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    pointer-events: none;
+  }
+  .answer-section.visible {
+    opacity: 1; transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .answer-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, rgba(184,134,46,0.18), rgba(184,134,46,0.06));
+    border: 1px solid rgba(184,134,46,0.45);
+    border-radius: 999px;
+    padding: 8px 20px; font-size: 13px;
+    color: var(--amber); letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+
+  .answer-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.78), rgba(255,250,255,0.62));
+    border: 1px solid rgba(160,110,200,0.3);
+    border-radius: 20px;
+    padding: 36px 32px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 60px rgba(160,120,190,0.25), inset 0 1px 0 rgba(255,255,255,0.7);
+    line-height: 1.9; font-size: 15px; color: #2e2350;
+    position: relative; overflow: hidden;
+  }
+  .answer-card::before {
+    content: '';
+    position: absolute; top:0; left:0; right:0; height:2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .answer-card p { margin-bottom: 16px; }
+  .answer-card p:last-child { margin-bottom: 0; }
+
+  .answer-card h3 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--amber); margin: 24px 0 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .answer-card h3::before {
+    content: '';
+    display: block; width: 3px; height: 18px;
+    background: var(--amber);
+    border-radius: 2px;
+  }
+
+  .cosmic-box {
+    background: linear-gradient(135deg, rgba(184,134,46,0.12), rgba(255,200,220,0.18));
+    border: 1px solid rgba(184,134,46,0.4);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-top: 20px;
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--amber);
+  }
+  .cosmic-box::before {
+    content: '💌 療癒指引';
+    display: block;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 2px; margin-bottom: 12px;
+    color: var(--amber);
+  }
+
+  .rating-box {
+    margin-top: 18px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px;
+  }
+  .rating-label {
+    font-size: 13px; letter-spacing: 3px;
+    color: var(--ink-soft);
+  }
+  .rating-stars {
+    font-size: 22px; letter-spacing: 3px;
+  }
+  .star-filled {
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(212,168,67,0.6);
+  }
+
+  .cta-section {
+    text-align: center; padding: 20px 24px 60px;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+    pointer-events: none;
+  }
+  .cta-section.visible {
+    opacity: 1; transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: linear-gradient(135deg, #06c755, #00a040);
+    color: white; font-family: 'Noto Sans TC', sans-serif;
+    font-size: 18px; font-weight: 700;
+    padding: 18px 48px; border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 8px 32px rgba(6,199,85,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 1px;
+  }
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 12px 40px rgba(6,199,85,0.5);
+  }
+  .cta-btn .line-icon { font-size: 22px; }
+
+  footer {
+    text-align: center; padding: 32px 24px;
+    font-size: 13px; color: rgba(110,85,150,0.6);
+    letter-spacing: 2px;
+    border-top: 1px solid rgba(120,90,160,0.15);
+    position: relative; z-index: 1;
+  }
+
+  .moon-divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 16px; margin: 0 auto 56px;
+    opacity: 0.6;
+  }
+  .moon-divider span { font-size: 20px; }
+  .moon-divider .line {
+    flex: 1; max-width: 120px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold));
+  }
+  .moon-divider .line.right {
+    background: linear-gradient(to left, transparent, var(--gold));
+  }
+
+  @keyframes fadeDown {
+    from { opacity:0; transform: translateY(-20px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+  @keyframes glyphFloat {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-8px); }
+  }
+  @keyframes shimmer {
+    0%,100% { left: -50%; }
+    50%     { left: 120%; }
+  }
+  @keyframes scrollPulse {
+    0%,100% { opacity:0.5; }
+    50%     { opacity:1; }
+  }
+  @keyframes revealCard {
+    from { opacity:0; transform: scale(0.95) translateY(20px); }
+    to   { opacity:1; transform: scale(1) translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .cards-row { gap: 12px; }
+    .tarot-card { width: clamp(130px, 42vw, 160px); }
+    .card-label { font-size: 18px; }
+    .answer-card { padding: 24px 20px; }
+    .cta-btn { padding: 16px 36px; font-size: 16px; }
+  }
+
+  .answer-block { display: none; }
+  .answer-block.active { display: block; animation: revealCard 0.6s ease both; }
+</style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<section class="hero">
+  <h1 class="hero-title">
+    牡羊座 10月
+    <span class="line2">感情運勢測驗</span>
+  </h1>
+  <p class="hero-sub">請靜下心來，憑直覺選擇下方其中一張牌卡，探索你在十月份的愛情指引與運勢解析。</p>
+  <div class="scroll-hint">
+    <span>向下選牌</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<div class="moon-divider">
+  <div class="line"></div>
+  <span>☽ ✧ ☾</span>
+  <div class="line right"></div>
+</div>
+
+<section class="pick-section" id="pick">
+  <div class="section-label">TAROT READING</div>
+  <h2 class="section-title">請選擇您的直覺牌卡</h2>
+  <p class="section-desc">點擊下方任一卡片翻開屬於你的十月解答</p>
+
+  <div class="cards-row">
+    <!-- 卡片 1：單身者 -->
+    <div class="tarot-card" onclick="revealCard(0)" id="card-0">
+      <div class="card-inner">
+        <div class="card-back">
+          <div class="card-glyph">✨</div>
+          <div class="card-label">Ⅰ</div>
+          <div class="card-hint">點擊翻牌</div>
+        </div>
+        <div class="card-face">
+          <div class="card-face-content">
+            <div class="card-face-letter">單身者</div>
+            <div class="card-face-sub">OCTOBER VIBES</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 卡片 2：有伴侶者 -->
+    <div class="tarot-card" onclick="revealCard(1)" id="card-1">
+      <div class="card-inner">
+        <div class="card-back">
+          <div class="card-glyph">✨</div>
+          <div class="card-label">Ⅱ</div>
+          <div class="card-hint">點擊翻牌</div>
+        </div>
+        <div class="card-face">
+          <div class="card-face-content">
+            <div class="card-face-letter">有伴侶者</div>
+            <div class="card-face-sub">OCTOBER VIBES</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="answer-section" id="answerSection">
+  <!-- 解答 1：單身者 -->
+  <div class="answer-block" id="block-0">
+    <div class="answer-badge">✧ 牡羊座 10月專屬解析 ✧</div>
+    <div class="answer-card">
+      <h2 style="font-family:'Noto Serif TC',serif; font-size:22px; color:var(--amber); margin-bottom:16px;">10月份牡羊座｜單身感情運勢</h2>
+      <p>這個月算是一個還不錯的開端。可以感覺到，單身的牡羊座朋友在10月份的時候，對你來說其實可能算是一種全新的篇章、全新的故事開始。</p>
+      <p>可能在這個月開始的時候，你就會想要做一些新的嘗試，去做一些過去以往不太一樣的事情。又或者不只是接觸新的事物，而是開始開創一條屬於自己的道路。所以10月對你們來說，比較像是一個「想要往前走」的月份。</p>
+      <p>同時這邊也有抽到代表牡羊座的牌卡，所以我覺得單身的牡羊座朋友們，尤其是男性來說，在這個月其實可以好好發揮你的魅力。如果是女性的話，我會覺得這個月比較能夠彰顯出自己的個性。你可以好好地跟別人表達，你是一個什麼樣子的人。而且你的魅力其實是可以吸引到人的。</p>
+      <p>你的魅力可能會帶有一點「力量感」，但這種力量並不是高高在上的權力，而比較像是在表達：「我有這個能力，所以我想要把我很好的一面展現給你看。」</p>
+      <p>但這邊到後面會有一個問題存在。單身的牡羊座朋友，不論你現在是單身、可能有暗戀對象，或者是有曖昧對象，雖然你們很認真地展現出了自己的熱情、魅力以及自己的狀態，但是可能同時也會想很多不必要的事情。</p>
+      <p>又或者是你會開始懷疑自己：「我是不是太過度熱情了？」所以到後面可能會有一點想要退縮。而這種退縮比較像是我退一步，我按兵不動。你們的熱情確實很旺盛，但也讓你可能會有一點點自我懷疑：</p>
+      <p>「我這樣展現自己是有用的嗎？」<br>「這樣真的可以吸引到對方嗎？」你們可能多少會這樣想。因為有時候對方給你的感覺可能會讓你覺得：「欸？我明明很熱情，可是你好像有一點冷淡欸？」很難不有這樣的想法。</p>
+      <p>不過對於10月份的牡羊座單身朋友，包含有曖昧對象，或目前還沒有桃花的人來說，其實這個月是一個很適合展現自己的月份。只是很多時候，可能不是沒有機會，而是你自己想的事情、考慮的事情比較多。而這件事情的影響程度，還是要看你選擇想把自己展現到什麼程度。當你已經展現到一個程度的時候，你能做的事情也都已經做得差不多了，接下來就可以觀察看看，會不會出現新的轉機。</p>
+      
+      <div class="cosmic-box">
+        <p><strong>指引牌：</strong></p>
+        <p>我們知道你非常認真、非常努力地想要展現自己的魅力，或者展現自己的能力給現在的曖昧對象看。又或者是，你可能也很努力地想要在你的職場、生活、學校等等不同的地方，把自己最好的一面展現出來。</p>
+        <p>但是你可能要優先考慮到本身主要的狀態：我覺得你要先顧好自己，真正去確認你的生活重心到底在哪裡。如果你主要的重心就是學業，還是個學生，建議你就把重心放在學業上。如果你現在的重點是在職場，已經開始工作，這個階段就先把重心放在職場。</p>
+        <p>並不是說你們這個月沒有桃花，而是你們這個月可能會陷入一種選擇困難。你可能很想要同時擁有兩個或以上的，能掌握住的事物，甚至其他更多不同的東西。</p>
+        <p>這邊要再次提醒牡羊座單身的朋友們：這個月你的魅力很好，能力、整體狀況也都OK。但是你還是要自己再反思一下：<strong>「如果我什麼都想要的話，會不會最後反而什麼都沒有？」</strong>到最後可能反而讓自己傷透腦筋。所以還是要先找到一個屬於自己的生活重心。</p>
+        <p>當你能夠找到自己的重心之後，基底打穩，就能夠再運用本身擁有的能力，分出「時間」，對你們的感情運勢來說，不論是想要吸引到的人，或者是現在的曖昧對象，他們才會覺得：「欸，你這個月的狀態，對我來說就是很仰慕、我很喜歡的。」</p>
+        <p>所以這個月的牡羊座，其實不是沒有桃花，而是你要先把自己的事情站穩，在感情路上將會也回應你相對有的回應。</p>
+      </div>
+
+      <div class="rating-box">
+        <span class="rating-label">十月戀愛運指數</span>
+        <div class="rating-stars">
+          <span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">☆</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 解答 2：有伴侶者 -->
+  <div class="answer-block" id="block-1">
+    <div class="answer-badge">✧ 牡羊座 10月專屬解析 ✧</div>
+    <div class="answer-card">
+      <h2 style="font-family:'Noto Serif TC',serif; font-size:22px; color:var(--amber); margin-bottom:16px;">10月份牡羊座｜有對象感情運勢</h2>
+      <p>如果你今天是母胎單身談戀愛，或者不是初次談戀愛，其實保持著童心未眠的狀態，也未必不好，但要稍微注意一點，如果你有時候太常故意要犯蠢吸引伴侶逗他/她開心或希望得到更多關注，但是有些事情真的還沒有搞清楚的狀況下，你不要一直把這個樣子表現給你的對象/伴侶看。</p>
+      <p>因為對方可能多少會覺得：「我們都交往多久了，為什麼你怎麼好像都沒有在成長、沒有在改變？」就會很容易讓你的另一半覺得，為什麼你好像什麼都不在乎、什麼都很隨便。可能會有這樣子的狀況出現。</p>
+      
+      <h3>感情中的「童心」要注意分寸</h3>
+      <p>再來我們看到其他能量的部分，我覺得其實你可能在這段感情裡面，有的時候是突然收穫了這一份感情，又或者是很突然地墜入了愛情。所以你們這段戀愛中的牡羊座，在本份特別需要去注意一點：不要讓自己給對方的感覺太像小孩子。</p>
+      <p>這不是要你裝成熟，你可以把你真實的那一面拿出來給他看。但是同時，要拿捏鬧你著玩或開玩笑的分寸。首先，如果你今天覺得自己很依賴對方，那我覺得你可以依賴他，但是不要完全依附在對方身上。如果你是屬於情人不在身邊，就會有點焦慮，那牡羊座的朋友們可能會出現以下幾個問題。</p>
+      <p>例如：牡羊座的朋友，你突然發生什麼事情，你可能會很急著想要跟伴侶/對象分享，但是對方可能正在忙，或者對方當下其實沒有辦法陪你。這種狀況如果長期出現在感情裡面，你們就要小心。因為如果今天對方已經有一點，不太想要繼續聽你講這些事情了，而你又一直沒有做出改變，那麼在這個月，你們的感情可能就會不小心鬆掉。</p>
+      
+      <h3>牡羊座的純粹，是優點也是需要注意的地方</h3>
+      <p>那這算嚴重嗎？其實牡羊座的朋友們本身就是有一顆童心，這其實也是牡羊座非常吸引別人的地方。那種很純粹的快樂，以及很純粹的情感表現能力，牡羊座算是非常純粹的一個。</p>
+      <p>但是有時候你們可能在態度的部分，會遇到一些考驗。例如雙方彼此之間，可能會開始思考：</p>
+      <p>「這段感情到底要不要繼續走下去？」<br>「我們要不要再走到下一個階段？」</p>
+      <p>這會是10月份的一個挑戰。所以要特別去注意。否則在本月份，你跟另一半沒有相處得很好，一直在吵架，但是問題都沒有解決，那就有可能在10月份的時候，你們的感情狀況會開始產生改變。而這個改變的狀況，會很明顯知道關係目前即將面臨改變階段。</p>
+      <p>要特別注意，因為有的時候，改變並不代表一定會分開，而是可能雙方彼此所持的意見不同。也可能變成其中一方較有主控權，有一點被PUA的感覺。如果是長期這樣的感情狀態就不是那麼健康。如果雙方的關係是不平等的，而你又是被掌控的那一個，那我會覺得牡羊座的朋友們，還是要好好重新審視這一段關係。</p>
+
+      <div class="cosmic-box">
+        <p><strong>指引牌：</strong></p>
+        <p>這張指引牌非常清楚，它要你做出一個選擇。選擇什麼呢？選擇取捨。你想得到什麼，可能就不能全部都得到。你可能要去取捨某一些東西，才可以擁有你真正想要的東西。</p>
+        <p>又或者是你要釐清：「我內心真正想要的，跟我實際上需要的，有沒有落差？」到底哪一個才是你真正要的？這是牡羊座朋友們在這個月很值得去思考的一件事情。因為你的選擇，可能會大大改變你們之間的感情狀況。</p>
+        <p>我相信你不是沒有想過，只是你有可能會有一點衝動。所以也要記得踩煞車。你可能已經有一些問題存在心裡面很久了，所以你才會做出一些決定。也有可能是你覺得對方很煩，或者是你很煩對方，這些狀況都有可能發生。</p>
+        <p>所以會建議牡羊座的朋友們，在這個月除了照顧自己之外，也要好好去看看你們這段感情。感情如果真的走不下去，也不要硬走。哪怕是一段很長久的感情，如果問題一直沒有被解決，想要繼續走下去，其實也會變得很困難。</p>
+        <p>所以10月份對有對象的牡羊座來說，比起一味地維持，更重要的是去看清楚：這段感情是不是你真正想要的，而你們之間的問題，是不是願意一起面對、一起解決的。</p>
+      </div>
+
+      <div class="rating-box">
+        <span class="rating-label">十月伴侶運指數</span>
+        <div class="rating-stars">
+          <span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">★</span><span class="star-filled">☆</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="ctaSection">
+  <div style="width: 1px; height: 48px; background: linear-gradient(to bottom, var(--gold), transparent); margin: 0 auto 24px;"></div>
+  <div class="cta-label">想了解更深度的個人化合盤與流年解析嗎？</div>
+  <a href="https://line.me/R/ti/p/@yourlineid" class="cta-btn" target="_blank">
+    <span class="line-icon">💬</span> 加 Line 預約一對一占卜
+  </a>
+  <div class="cta-note">點擊按鈕直接聯繫占卜師，開啟專屬心靈指引</div>
+</section>
+
+<footer>
+  <p>Copyright © 2026 牡羊座 10月感情運勢. All Rights Reserved.</p>
+</footer>
+
+<script>
+  // 星空畫布動畫
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  let stars = [];
+
+  function initStars() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    stars = [];
+    const count = Math.floor((width * height) / 8000);
+    for (let i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.5 + 0.5,
+        alpha: Math.random(),
+        speed: Math.random() * 0.005 + 0.002
+      });
+    }
+  }
+
+  function animateStars() {
+    ctx.clearRect(0, 0, width, height);
+    stars.forEach(s => {
+      s.alpha += s.speed;
+      if (s.alpha > 1 || s.alpha < 0) s.speed = -s.speed;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(220, 210, 255, ${Math.abs(s.alpha)})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(animateStars);
+  }
+
+  window.addEventListener('resize', initStars);
+  initStars();
+  animateStars();
+
+  // 翻牌互動邏輯
+  function revealCard(index) {
+    for (let i = 0; i < 2; i++) {
+      document.getElementById(`card-${i}`).classList.remove('flipped');
+      document.getElementById(`block-${i}`).classList.remove('active');
+    }
+
+    const selectedCard = document.getElementById(`card-${index}`);
+    selectedCard.classList.add('flipped');
+
+    const answerSection = document.getElementById('answerSection');
+    const ctaSection = document.getElementById('ctaSection');
+    const targetBlock = document.getElementById(`block-${index}`);
+
+    answerSection.classList.add('visible');
+    ctaSection.classList.add('visible');
+    targetBlock.classList.add('active');
+
+    setTimeout(() => {
+      answerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 200);
+  }
+</script>
+
+</body>
+</html>
