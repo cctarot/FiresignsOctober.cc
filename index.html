@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>牡羊座10月感情運勢</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
   :root {
     --bg1:        #0a0e2a;
     --bg2:        #131a3d;
     --bg3:        #1d1147;
-    --ink:        #e6e8ff;
-    --ink-soft:   #9aa0d6;
-    --amber:      #8f7ff0;
-    --amber-l:    #b39bff;
-    --gold:       #d4a843;
-    --gold-l:     #f0cc7a;
-    --lilac:      #6f6ac9;
+    --ink:        #f0f2ff;       /* 提升主要文字亮度 */
+    --ink-soft:   #c4c9e8;       /* 提升次要文字亮度，確保高對比 */
+    --amber:      #b39bff;
+    --amber-l:    #d0c2ff;
+    --gold:       #e6be56;
+    --gold-l:     #f7df94;
+    --lilac:      #9d97ff;
     --white:      #ffffff;
   }
 
@@ -76,7 +76,7 @@
     line-height: 1.3;
     letter-spacing: 2px;
     margin-bottom: 20px;
-    background: linear-gradient(135deg, #b39bff, #f0cc7a);
+    background: linear-gradient(135deg, #d0c2ff, #f7df94);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -84,7 +84,7 @@
   }
   .hero-title .line2 {
     display: block;
-    background: linear-gradient(135deg, #6f6ac9, #b39bff, var(--gold-l));
+    background: linear-gradient(135deg, #9d97ff, #d0c2ff, var(--gold-l));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -115,8 +115,8 @@
   }
 
   .section-label {
-    font-size: 11px; letter-spacing: 5px;
-    color: var(--amber); text-transform: uppercase;
+    font-size: 12px; letter-spacing: 5px; font-weight: 600;
+    color: var(--amber-l); text-transform: uppercase;
     margin-bottom: 12px;
   }
 
@@ -126,7 +126,7 @@
     font-weight: 700;
     text-align: center;
     margin-bottom: 12px;
-    color: var(--lilac);
+    color: var(--gold-l);
   }
 
   .section-desc {
@@ -206,7 +206,7 @@
   }
 
   .card-hint {
-    font-size: 11px; color: var(--lilac);
+    font-size: 12px; color: var(--amber-l); font-weight: 500;
     letter-spacing: 2px;
   }
 
@@ -228,7 +228,7 @@
     background-clip: text;
     letter-spacing: 1px;
   }
-  .card-face-sub { font-size: 12px; color: var(--lilac); margin-top: 6px; letter-spacing: 2px; }
+  .card-face-sub { font-size: 12px; color: var(--amber-l); margin-top: 6px; letter-spacing: 2px; }
 
   .card-back::after {
     content: '';
@@ -254,23 +254,23 @@
 
   .answer-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    background: linear-gradient(135deg, rgba(184,134,46,0.18), rgba(184,134,46,0.06));
-    border: 1px solid rgba(184,134,46,0.45);
+    background: linear-gradient(135deg, rgba(179,155,255,0.2), rgba(179,155,255,0.08));
+    border: 1px solid rgba(179,155,255,0.45);
     border-radius: 999px;
-    padding: 8px 20px; font-size: 13px;
-    color: var(--amber); letter-spacing: 2px;
+    padding: 8px 20px; font-size: 13px; font-weight: 600;
+    color: var(--amber-l); letter-spacing: 2px;
     margin-bottom: 20px;
   }
 
   .answer-card {
-    background: linear-gradient(145deg, rgba(255,255,255,0.78), rgba(255,250,255,0.62));
-    border: 1px solid rgba(160,110,200,0.3);
+    background: linear-gradient(145deg, rgba(20, 16, 48, 0.92), rgba(12, 10, 32, 0.92));
+    border: 1px solid rgba(179,155,255,0.3);
     border-radius: 20px;
     padding: 36px 32px;
     margin-bottom: 20px;
     backdrop-filter: blur(20px);
-    box-shadow: 0 20px 60px rgba(160,120,190,0.25), inset 0 1px 0 rgba(255,255,255,0.7);
-    line-height: 1.9; font-size: 15px; color: #2e2350;
+    box-shadow: 0 20px 60px rgba(10, 8, 30, 0.6), inset 0 1px 0 rgba(179,155,255,0.2);
+    line-height: 1.9; font-size: 15px; color: #f0f2ff;
     position: relative; overflow: hidden;
   }
   .answer-card::before {
@@ -279,48 +279,60 @@
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
   }
 
-  .answer-card p { margin-bottom: 16px; }
+  .answer-card p { margin-bottom: 16px; color: #e2e6ff; }
   .answer-card p:last-child { margin-bottom: 0; }
+
+  .answer-card h2, .answer-card h3 {
+    color: var(--gold-l) !important;
+  }
 
   .answer-card h3 {
     font-family: 'Noto Serif TC', serif;
-    font-size: 16px; font-weight: 700;
-    color: var(--amber); margin: 24px 0 12px;
+    font-size: 17px; font-weight: 700;
+    margin: 24px 0 12px;
     display: flex; align-items: center; gap: 8px;
   }
   .answer-card h3::before {
     content: '';
     display: block; width: 3px; height: 18px;
-    background: var(--amber);
+    background: var(--gold);
     border-radius: 2px;
   }
 
   .cosmic-box {
-    background: linear-gradient(135deg, rgba(184,134,46,0.12), rgba(255,200,220,0.18));
-    border: 1px solid rgba(184,134,46,0.4);
+    background: linear-gradient(135deg, rgba(40, 28, 80, 0.6), rgba(30, 20, 60, 0.8));
+    border: 1px solid rgba(179,155,255,0.35);
     border-radius: 16px;
     padding: 24px 28px;
     margin-top: 20px;
     font-size: 15px;
     line-height: 1.9;
-    color: var(--amber);
+    color: #f0f2ff;
+  }
+  .cosmic-box strong {
+    color: var(--gold-l);
+  }
+  .cosmic-box p {
+    color: #e2e6ff;
   }
   .cosmic-box::before {
     content: '💌 療癒指引';
     display: block;
     font-family: 'Noto Serif TC', serif;
-    font-size: 14px; font-weight: 700;
+    font-size: 15px; font-weight: 700;
     letter-spacing: 2px; margin-bottom: 12px;
-    color: var(--amber);
+    color: var(--gold-l);
   }
 
   .rating-box {
-    margin-top: 18px;
+    margin-top: 24px;
     display: flex; align-items: center; justify-content: center;
-    gap: 10px;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(179,155,255,0.15);
   }
   .rating-label {
-    font-size: 13px; letter-spacing: 3px;
+    font-size: 14px; letter-spacing: 2px; font-weight: 600;
     color: var(--ink-soft);
   }
   .rating-stars {
@@ -328,7 +340,7 @@
   }
   .star-filled {
     color: var(--gold);
-    text-shadow: 0 0 10px rgba(212,168,67,0.6);
+    text-shadow: 0 0 10px rgba(212,168,67,0.8);
   }
 
   .cta-section {
@@ -340,6 +352,13 @@
   .cta-section.visible {
     opacity: 1; transform: translateY(0);
     pointer-events: all;
+  }
+
+  .cta-label {
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
   }
 
   .cta-btn {
@@ -355,13 +374,20 @@
   }
   .cta-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 12px 40px rgba(6,199,85,0.5);
+    box-shadow: 0 12px 40px rgba(6,199,85,0.5);
   }
   .cta-btn .line-icon { font-size: 22px; }
 
+  .cta-note {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 12px;
+    letter-spacing: 1px;
+  }
+
   footer {
     text-align: center; padding: 32px 24px;
-    font-size: 13px; color: rgba(110,85,150,0.6);
+    font-size: 13px; color: var(--ink-soft);
     letter-spacing: 2px;
     border-top: 1px solid rgba(120,90,160,0.15);
     position: relative; z-index: 1;
@@ -372,7 +398,7 @@
     gap: 16px; margin: 0 auto 56px;
     opacity: 0.6;
   }
-  .moon-divider span { font-size: 20px; }
+  .moon-divider span { font-size: 20px; color: var(--gold-l); }
   .moon-divider .line {
     flex: 1; max-width: 120px; height: 1px;
     background: linear-gradient(to right, transparent, var(--gold));
@@ -493,8 +519,8 @@
   <div class="answer-block" id="block-0">
     <div class="answer-badge">✧ 牡羊座 10月專屬解析 ✧</div>
     <div class="answer-card">
-      <h2 style="font-family:'Noto Serif TC',serif; font-size:22px; color:var(--amber); margin-bottom:16px;">10月份牡羊座｜單身感情運勢</h2>
-      <p>這個月算是一個還不錯的開端。可以感覺到，單身的牡羊座朋友在10月份的時候，對你來說其實可能算是一種全新的篇章、全新的故事開始。</p>
+      <h2 style="font-family:'Noto Serif TC',serif; font-size:22px; color:var(--gold-l); margin-bottom:16px;">10月份牡羊座｜單身感情運勢</h2>
+      <p>這個月算是一個還不錯的開端。可以感覺到，單身的牡羊座朋友在10月份的時候，對你來說 checkIf 可能算是一種全新的篇章、全新的故事開始。</p>
       <p>可能在這個月開始的時候，你就會想要做一些新的嘗試，去做一些過去以往不太一樣的事情。又或者不只是接觸新的事物，而是開始開創一條屬於自己的道路。所以10月對你們來說，比較像是一個「想要往前走」的月份。</p>
       <p>同時這邊也有抽到代表牡羊座的牌卡，所以我覺得單身的牡羊座朋友們，尤其是男性來說，在這個月其實可以好好發揮你的魅力。如果是女性的話，我會覺得這個月比較能夠彰顯出自己的個性。你可以好好地跟別人表達，你是一個什麼樣子的人。而且你的魅力其實是可以吸引到人的。</p>
       <p>你的魅力可能會帶有一點「力量感」，但這種力量並不是高高在上的權力，而比較像是在表達：「我有這個能力，所以我想要把我很好的一面展現給你看。」</p>
@@ -526,7 +552,7 @@
   <div class="answer-block" id="block-1">
     <div class="answer-badge">✧ 牡羊座 10月專屬解析 ✧</div>
     <div class="answer-card">
-      <h2 style="font-family:'Noto Serif TC',serif; font-size:22px; color:var(--amber); margin-bottom:16px;">10月份牡羊座｜有對象感情運勢</h2>
+      <h2 style="font-family:'Noto Serif TC',serif; font-size:22px; color:var(--gold-l); margin-bottom:16px;">10月份牡羊座｜有對象感情運勢</h2>
       <p>如果你今天是母胎單身談戀愛，或者不是初次談戀愛，其實保持著童心未眠的狀態，也未必不好，但要稍微注意一點，如果你有時候太常故意要犯蠢吸引伴侶逗他/她開心或希望得到更多關注，但是有些事情真的還沒有搞清楚的狀況下，你不要一直把這個樣子表現給你的對象/伴侶看。</p>
       <p>因為對方可能多少會覺得：「我們都交往多久了，為什麼你怎麼好像都沒有在成長、沒有在改變？」就會很容易讓你的另一半覺得，為什麼你好像什麼都不在乎、什麼都很隨便。可能會有這樣子的狀況出現。</p>
       
@@ -564,7 +590,7 @@
 <section class="cta-section" id="ctaSection">
   <div style="width: 1px; height: 48px; background: linear-gradient(to bottom, var(--gold), transparent); margin: 0 auto 24px;"></div>
   <div class="cta-label">想了解更深度的個人化合盤與流年解析嗎？</div>
-  <a href="https://line.me/R/ti/p/@yourlineid" class="cta-btn" target="_blank">
+  <a href="https://lin.ee/zudDRfs" class="cta-btn" target="_blank">
     <span class="line-icon">💬</span> 加 Line 預約一對一占卜
   </a>
   <div class="cta-note">點擊按鈕直接聯繫占卜師，開啟專屬心靈指引</div>
